@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Виталий & Евгения — свадебная история</title>
+  <meta name="description" content="Свадебное приглашение Виталия и Евгении. 18 сентября 2026, Элиста, ресторан Жемчужный." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="prelude-mode">
+  <audio id="weddingMusic" preload="auto" loop>
+    <source src="assets/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+  <div class="global-bg" aria-hidden="true"></div>
+  <div class="global-vignette" aria-hidden="true"></div>
+  <div class="gold-dust" id="goldDust" aria-hidden="true"></div>
+  <div class="scroll-line" id="scrollLine" aria-hidden="true"></div>
+
+  <section class="prelude" id="prelude" aria-label="Открытие приглашения">
+    <div class="prelude-bg" aria-hidden="true"></div>
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="prelude-light" aria-hidden="true"></div>
+    <div class="prelude-card">
+      <p class="kicker">свадебный фильм</p>
+      <h1 class="prelude-title"><span>Виталий</span><em>&</em><span>Евгения</span></h1>
+      <div class="heart-scene prelude-heart" aria-hidden="true">
+        <svg class="heart-svg" viewBox="0 0 520 220">
+          <defs>
+            <linearGradient id="preludeGold" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#8a541e" />
+              <stop offset=".22" stop-color="#e0a849" />
+              <stop offset=".5" stop-color="#fff0bf" />
+              <stop offset=".78" stop-color="#e4a846" />
+              <stop offset="1" stop-color="#8a541e" />
+            </linearGradient>
+            <filter id="preludeGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feGaussianBlur stdDeviation="13" result="wide" />
+              <feMerge><feMergeNode in="wide"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <path id="preludeLeft" d="M10 114 C76 66, 127 149, 184 105 S235 84, 260 111" />
+            <path id="preludeRight" d="M510 114 C444 66, 393 149, 336 105 S285 84, 260 111" />
+            <path id="preludeHeart" d="M260 133 C235 99, 186 91, 181 133 C176 187, 260 207, 260 207 C260 207, 344 187, 339 133 C334 91, 285 99, 260 133 Z" />
+          </defs>
+          <use href="#preludeLeft" class="wave-path prelude-wave" />
+          <use href="#preludeRight" class="wave-path prelude-wave" />
+          <use href="#preludeHeart" class="heart-path heart-halo" />
+          <use href="#preludeHeart" class="heart-path" />
+          <g class="moving-sparks">
+            <circle r="3.5"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#preludeLeft" /></animateMotion></circle>
+            <circle r="2.4"><animateMotion begin=".36s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeLeft" /></animateMotion></circle>
+            <circle r="2.8"><animateMotion begin=".82s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeLeft" /></animateMotion></circle>
+            <circle r="1.8"><animateMotion begin="1.28s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeLeft" /></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="4.2s" repeatCount="indefinite"><mpath href="#preludeRight" /></animateMotion></circle>
+            <circle r="2.4"><animateMotion begin=".42s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeRight" /></animateMotion></circle>
+            <circle r="2.8"><animateMotion begin=".9s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeRight" /></animateMotion></circle>
+            <circle r="1.8"><animateMotion begin="1.34s" dur="4.2s" repeatCount="indefinite"><mpath href="#preludeRight" /></animateMotion></circle>
+          </g>
+        </svg>
+      </div>
+      <p class="prelude-date">18 сентября 2026 · 17:00 · Элиста</p>
+      <button class="open-invite-btn" id="openInvite" type="button">
+        <span>Открыть историю любви</span>
+        <small>и включить мелодию вечера</small>
+      </button>
+    </div>
+    <p class="scroll-hint">после открытия начнётся свадебная история</p>
+  </section>
+
+  <button class="music-button" id="musicButton" type="button" aria-label="Включить мелодию любви">
+    <span class="music-note">♪</span>
+    
+  </button>
+
+  <aside class="sidebar" aria-label="Навигация по кадрам">
+    <nav class="side-nav">
+      <a href="#frame-home" class="side-link active"><strong>ГЛАВНАЯ</strong><span>начало истории</span></a>
+      <a href="#frame-story" class="side-link"><strong>ИСТОРИЯ</strong><span>о нас</span></a>
+      <a href="#frame-steppe" class="side-link"><strong>СТЕПЬ</strong><span>закат и звёзды</span></a>
+      <a href="#frame-details" class="side-link"><strong>ДЕТАЛИ</strong><span>день свадьбы</span></a>
+      <a href="#frame-program" class="side-link"><strong>ПРОГРАММА</strong><span>вечера</span></a>
+      <a href="#frame-rsvp" class="side-link"><strong>ОТВЕТ</strong><span>через MAX</span></a>
+    </nav>
+    <div class="side-sign">
+      <div class="side-ornament">❦</div>
+      <div class="side-monogram">B&E</div>
+      <div class="side-date">18.09.2026</div>
+    </div>
+  </aside>
+
+  <div class="mobile-topbar" aria-hidden="true">
+    <span>Виталий & Евгения</span>
+    <a href="#frame-details">18.09.2026</a>
+  </div>
+
+  <main class="slide-deck" id="deck">
+    <section class="slide hero-slide" id="frame-home" data-title="Главная">
+      <div class="frame-label">КАДР 01 · СВАДЕБНАЯ ПРЕМЬЕРА</div>
+      <div class="hero-background" aria-hidden="true"></div>
+      <div class="hero-shadow" aria-hidden="true"></div>
+      <img class="hero-couple" src="assets/hero-couple.png" alt="Виталий и Евгения в калмыцких нарядах на фоне степи и звёзд" />
+
+      <div class="hero-left reveal-item">
+        <p class="kicker">свадебная история</p>
+        <h2 class="couple-title"><span>Виталий</span><em>&</em><span>Евгения</span></h2>
+        <div class="heart-scene" aria-label="Золотое сердце любви">
+          <svg class="heart-svg" viewBox="0 0 520 220" aria-hidden="true">
+            <defs>
+              <linearGradient id="goldStroke" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#8a541e" />
+                <stop offset=".22" stop-color="#e0a849" />
+                <stop offset=".5" stop-color="#fff0bf" />
+                <stop offset=".78" stop-color="#e4a846" />
+                <stop offset="1" stop-color="#8a541e" />
+              </linearGradient>
+              <filter id="goldGlow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feGaussianBlur stdDeviation="12" result="wide" />
+                <feMerge><feMergeNode in="wide"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <path id="leftPath" d="M10 114 C76 66, 127 149, 184 105 S235 84, 260 111" />
+              <path id="rightPath" d="M510 114 C444 66, 393 149, 336 105 S285 84, 260 111" />
+              <path id="heartPath" d="M260 133 C235 99, 186 91, 181 133 C176 187, 260 207, 260 207 C260 207, 344 187, 339 133 C334 91, 285 99, 260 133 Z" />
+            </defs>
+            <use href="#leftPath" class="wave-path" />
+            <use href="#rightPath" class="wave-path" />
+            <use href="#heartPath" class="heart-path heart-halo" />
+            <use href="#heartPath" class="heart-path" />
+            <g class="moving-sparks">
+              <circle r="3.5"><animateMotion dur="4.4s" repeatCount="indefinite"><mpath href="#leftPath" /></animateMotion></circle>
+              <circle r="2.4"><animateMotion begin=".38s" dur="4.4s" repeatCount="indefinite"><mpath href="#leftPath" /></animateMotion></circle>
+              <circle r="2.8"><animateMotion begin=".84s" dur="4.4s" repeatCount="indefinite"><mpath href="#leftPath" /></animateMotion></circle>
+              <circle r="1.8"><animateMotion begin="1.32s" dur="4.4s" repeatCount="indefinite"><mpath href="#leftPath" /></animateMotion></circle>
+              <circle r="3.5"><animateMotion dur="4.4s" repeatCount="indefinite"><mpath href="#rightPath" /></animateMotion></circle>
+              <circle r="2.4"><animateMotion begin=".42s" dur="4.4s" repeatCount="indefinite"><mpath href="#rightPath" /></animateMotion></circle>
+              <circle r="2.8"><animateMotion begin=".9s" dur="4.4s" repeatCount="indefinite"><mpath href="#rightPath" /></animateMotion></circle>
+              <circle r="1.8"><animateMotion begin="1.38s" dur="4.4s" repeatCount="indefinite"><mpath href="#rightPath" /></animateMotion></circle>
+            </g>
+          </svg>
+        </div>
+        <p class="hero-date">18 сентября 2026</p>
+        <button class="story-btn" type="button" data-go="#frame-story">Смотреть историю</button>
+        <p class="hero-note">Наша история начинается с любви…</p>
+      </div>
+
+      <div class="countdown-box reveal-item">
+        <p>До нашего дня осталось</p>
+        <div class="timer" id="timer">
+          <div><strong id="days">00</strong><span>Дней</span></div>
+          <div><strong id="hours">00</strong><span>Часов</span></div>
+          <div><strong id="minutes">00</strong><span>Минут</span></div>
+          <div><strong id="seconds">00</strong><span>Секунд</span></div>
+        </div>
+        <small>Любовь — это не взгляд друг на друга,<br />это взгляд вместе в одном направлении.</small>
+      </div>
+
+      <div class="hero-bottom reveal-item">
+        <article class="preview-card steppe-preview-mini">
+          <img src="assets/temple-landscape.jpg" alt="Калмыцкая степь, закат, звёздное небо и хурул" />
+          <div><h3>Закат. Степь. Звёзды.</h3><p>Там, где небо встречается с землёй, начинается наша история.</p></div>
+        </article>
+        <article class="quick-card"><span>День свадьбы</span><strong>18 сентября 2026</strong><small>17:00</small></article>
+        <article class="quick-card"><span>Место</span><strong>Элиста</strong><small>ресторан «Жемчужный»</small></article>
+        <article class="quick-card"><span>Присутствие</span><strong>MAX</strong><small>придёте или нет</small></article>
+      </div>
+    </section>
+
+    <section class="slide story-slide" id="frame-story" data-title="История">
+      <div class="slide-inner two-col story-layout">
+        <div class="cinema-copy reveal-item">
+          <p class="kicker">КАДР 02 · ПРОЛОГ</p>
+          <h2>Когда два сердца выбирают один путь</h2>
+          <p>Дорогие родные и друзья, в нашей жизни наступает день, который хочется разделить с теми, кто действительно дорог сердцу. Этот вечер будет не просто торжеством — он станет началом новой семейной истории.</p>
+          <p>Мы хотим, чтобы вы почувствовали тепло этого дня: музыку, мягкий свет, степной закат, искренние улыбки и момент, когда мы скажем друг другу самое главное «да».</p>
+          <div class="frame-actions"><button class="ghost-btn frame-next" type="button" data-go="#frame-steppe">Следующий кадр — степь</button></div>
+        </div>
+        <figure class="story-portrait reveal-item" aria-label="Виталий и Евгения на фоне хурула и звёзд">
+          <img src="assets/hero-couple.png" alt="Виталий и Евгения на фоне хурула и звёзд" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide steppe-slide" id="frame-steppe" data-title="Степь">
+      <div class="wide-scene reveal-item">
+        <img src="assets/temple-landscape.jpg" alt="Калмыцкая степь на закате, хурул и тюльпаны" />
+        <div class="wide-scene-text">
+          <p class="kicker">КАДР 03 · ЗАКАТ</p>
+          <h2>Закат. Степь. Звёзды.</h2>
+          <p>Там, где ветер поёт древние песни, где тюльпаны встречают золотой свет, а далёкий хурул сияет под небом, начинается наша новая глава.</p>
+          <div class="frame-actions"><button class="ghost-btn frame-next" type="button" data-go="#frame-details">Следующий кадр — детали</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide details-slide" id="frame-details" data-title="Детали">
+      <div class="slide-inner">
+        <p class="kicker center">КАДР 04 · ДЕТАЛИ СВАДЬБЫ</p>
+        <h2 class="slide-title">Главные детали вечера</h2>
+        <div class="details-grid">
+          <article class="info-card reveal-item"><div class="card-icon">✦</div><h3>День свадьбы</h3><strong>18 сентября 2026</strong><span>Пятница</span><p class="time">17:00</p></article>
+          <article class="info-card reveal-item"><div class="card-icon">⌖</div><h3>Место</h3><strong>Элиста</strong><span>ресторан</span><p>«Жемчужный»</p><a href="https://www.google.com/maps/search/?api=1&query=Элиста ресторан Жемчужный" target="_blank" rel="noopener">Показать на карте</a></article>
+          <article class="info-card reveal-item"><div class="card-icon">∞</div><h3>Вечер для взрослых</h3><span>Мы мечтаем провести этот праздник в камерной и элегантной атмосфере, где каждый сможет насладиться вечером и быть частью нашей истории.</span></article>
+          <article class="info-card reveal-item"><div class="card-icon">✉</div><h3>Сообщить о присутствии</h3><span>Пожалуйста, сообщите в MAX, сможете ли вы прийти на наш праздник.</span><a href="https://max.ru/join/7-bIVHYlD4uTc9ha1PPecDdx9YN9aR6acbjoZoPllLk" target="_blank" rel="noopener">Сообщить в MAX</a></article>
+        </div>
+        <div class="frame-actions center-actions"><button class="ghost-btn frame-next" type="button" data-go="#frame-program">Следующий кадр — программа</button></div>
+      </div>
+    </section>
+
+    <section class="slide program-slide" id="frame-program" data-title="Программа">
+      <div class="slide-inner two-col compact">
+        <div class="cinema-copy reveal-item">
+          <p class="kicker">КАДР 05 · СЦЕНАРИЙ ВЕЧЕРА</p>
+          <h2>Вечер, который хочется запомнить</h2>
+          <p>Мы продумали этот день как красивую киноленту: от первых объятий до финального света, от волнения церемонии до музыки и тёплых разговоров.</p>
+        </div>
+        <div class="program-list reveal-item">
+          <div><strong>17:00</strong><span>Сбор гостей, первые улыбки и приветственный свет</span></div>
+          <div><strong>17:30</strong><span>Праздничный ужин, семейное тепло и красивые слова</span></div>
+          <div><strong>20:00</strong><span>Музыка, танцы, золотой свет и воспоминания навсегда</span></div>
+          <div class="frame-actions"><button class="ghost-btn frame-next" type="button" data-go="#frame-rsvp">Финальный кадр</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide finale-slide" id="frame-rsvp" data-title="Финал">
+      <div class="credits-art reveal-item"><img src="assets/hero-couple.png" alt="Виталий и Евгения на фоне хурула и звёзд" /></div>
+      <div class="credits-content reveal-item">
+        <p class="kicker">ФИНАЛЬНЫЕ ТИТРЫ</p>
+        <h2>Ждём вас</h2>
+        <p>Будем счастливы разделить с вами этот тёплый, красивый вечер, наполненный любовью, светом, музыкой и искренними улыбками.</p>
+        <div class="credits-roll">
+          <span>в главных ролях</span><strong>Виталий & Евгения</strong>
+          <span>дата премьеры</span><strong>18 сентября 2026</strong>
+          <span>место встречи</span><strong>Элиста · ресторан «Жемчужный»</strong>
+          <span>самая важная сцена</span><strong>вместе с вами</strong>
+        </div>
+        <div class="final-actions">
+          <a class="credits-button" href="https://max.ru/join/7-bIVHYlD4uTc9ha1PPecDdx9YN9aR6acbjoZoPllLk" target="_blank" rel="noopener">Сообщить, придёте ли вы</a>
+          <button class="ghost-btn frame-next back-home" type="button" data-go="#frame-home">Вернуться к началу</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="slide-dots" id="slideDots" aria-label="Навигация по слайдам"></div>
+  <script src="script.js"></script>
+</body>
+</html>
